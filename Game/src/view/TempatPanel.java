@@ -18,6 +18,7 @@ import model.Tempat;
  * @author user only
  */
 public class TempatPanel extends JPanel {
+
     private Tempat tempat;
 
     public TempatPanel() {
@@ -27,7 +28,6 @@ public class TempatPanel extends JPanel {
         this.tempat = tempat;
     }
 
-
     /**
      * Fungsi untuk menggambar di panel
      *
@@ -36,18 +36,26 @@ public class TempatPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+//        g.fillRect(0, 0, Tempat.batasKanan, Tempat.batasBawah);
         // proses gambar daftar sel
         // asumsi sel berbentuk lingkaran
         // gambar lingkaran dengan fillOval dengan diameter 20
         if (tempat != null) {
             for (int i = 0; i < tempat.getDaftarSel().size(); i++) {
                 Sel sel = tempat.getDaftarSel().get(i);
-                g.setColor(sel.getWarna());
-                g.fillOval(sel.getPosisiX(),
-                        sel.getPosisiY(),
-                        sel.getLebar(),
-                        sel.getTinggi());
+                if (sel.getNilai() == '@') {
+                    g.setColor(sel.getWarna());
+                    g.fillRect(sel.getPosisiX()*sel.getLebar(),
+                            sel.getPosisiY()*sel.getTinggi(),
+                            sel.getLebar(),
+                            sel.getTinggi());
+                } else {
+                    g.setColor(sel.getWarna());
+                    g.fillOval(sel.getPosisiX()*sel.getLebar(),
+                            sel.getPosisiY()*sel.getTinggi(),
+                            sel.getLebar(),
+                            sel.getTinggi());
+                }
             }
         }
     }

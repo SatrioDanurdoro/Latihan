@@ -7,6 +7,9 @@ package model;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +38,58 @@ public class Tempat {
      * @param file 
      */
     public void bacaKonfigurasi(File file){
+        FileInputStream input = null;
+        String hasil = "";
+        int dataInt;
+        int y = 0;
+        int x= 0;
+        boolean isi = false;
+//        Tempat temp = new Tempat();
         
+        try {
+            input = new FileInputStream(file);
+            while ((dataInt = input.read()) != -1) {
+                hasil = hasil+(char) dataInt;
+                if (dataInt != '\n') {
+                    if (dataInt !='\t') {
+                       Sel sel = new Sel(x,y,(char) dataInt);
+                    this.tambahSel(sel);
+                    y++; 
+                    }}else{
+                    y=0;
+                    x++;
+                }
+                    
+                
+//                if ((char) dataInt != '\t') {
+//                    
+//                    sel.setPosisiY(baris);
+//                    baris ++;
+//                    
+//                    if ((char) dataInt != '\t') {
+//                        hasil = hasil + (char) dataInt;
+//                        sel.setPosisiX(kolom);
+//                        kolom ++;
+//                    } else {
+//                        boolean Isi;
+//                        if (isi == false) {
+//                            this.setIsi(hasil);
+//                            isi = true;
+//                            hasil = "";
+//
+//                        }
+//                    }
+//                } else {
+//                    
+//                    isi = true;
+//                    hasil = "";
+                this.setIsi(hasil);
+            }
+        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(Peta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+//            Logger.getLogger(Peta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     /**
      * Fungsi penambah daftar sel.
